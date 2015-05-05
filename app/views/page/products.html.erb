@@ -1,0 +1,56 @@
+<article>
+  <h1>Products</h1>
+
+  <table id="prod_table">
+    <thead>
+      <td>Description</td>
+      <td>Price</td>
+    </thead>
+    <% @products_hash.each do |item, price| %>
+        <tr><td><%= item %></td><td><%= sprintf('$%.2f', price) %></td></tr>
+    <% end %>
+  </table>
+
+  <!--<table id="prod_table">
+    <tr>
+      <td>
+        <h4>Product 1</h4>
+        <%= image_tag "http://placeimg.com/301/200/any/sepia?1", alt: "some image 1" %>
+        <p>
+          Image Description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent
+          libero. Duis
+          sagittis ipsum. Sed cursus ante dapibus diam.
+        </p>
+      </td>
+      <td>
+        <h4>Product 2</h4>
+        <%= image_tag "http://placeimg.com/301/200/any/grayscale?2", alt: "some image 2" %>
+        <p>
+          Image Description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent
+          libero. Duis
+          sagittis ipsum. Sed cursus ante dapibus diam.
+        </p>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <h4>Product 3</h4>
+        <%= image_tag "http://placeimg.com/301/200/any?3", alt: "some image 3" %>
+        <p>
+          Image Description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent
+          libero. Duis
+          sagittis ipsum. Sed cursus ante dapibus diam.
+        </p>
+      </td>
+      <td>
+        <h4>Product 4</h4>
+        <%= image_tag "http://placeimg.com/301/200/any/grayscale?4", alt: "some image 4" %>
+        <p>
+          Image Description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent
+          libero. Duis
+          sagittis ipsum. Sed cursus ante dapibus diam.
+        </p>
+      </td>
+    </tr>
+  </table>-->
+</article>

@@ -1,0 +1,91 @@
+<p id="notice"><%= notice %></p>
+<p>
+    <% if current_user.try!(:admin?) %>
+        <%= link_to 'Edit', edit_blog_path(@blog) %> |
+    <% end %>
+    <%= link_to 'Back', blogs_path %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @blog.title %>
+</p>
+
+<p>
+  <strong>Average Rating:</strong>
+  <% if @blog.blog_comments.average(:rating) == nil %>
+      Not yet rated
+  <% else %>
+      <%= stars(@blog.blog_comments.average(:rating).round) %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Published date:</strong>
+  <%= @blog.published_date %>
+</p>
+
+<p>
+  <strong>Author:</strong>
+  <%= @blog.author %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @blog.content.html_safe %>
+</p>
+<hr/>
+<h3>Reviews:</h3>
+
+<% @blog.blog_comments.each do |comment| %>
+    <hr/>
+    <h5><%= comment.author %> said <%= time_ago_in_words(comment.created_at) %> ago</h5>
+    <%= image_tag comment.avatar %>
+    <p><%= comment.content %></p>
+    <%= stars(comment.rating) %><br/>
+
+<% end %>
+<hr/>
+<h3>Add your comment:</h3>
+
+<%= form_for([@blog, @blog_comment]) do |f| %>
+    <% if @blog_comment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@blog_comment.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+          <ul>
+            <% @blog_comment.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :author %><br>
+      <%= f.text_field :author %>
+    </div>
+    <div class="field">
+      <%= f.label :avatar %><br>
+      <%= f.text_field :avatar %>
+    </div>
+    <div class="field">
+      <%= f.label :content %><br>
+      <%= f.text_area :content %>
+    </div>
+    <div class="field">
+      <%= f.label :rating %> (1-5)<br>
+      <%= f.select_tag :blog, options_for_select(@product_list, @product) %>
+      <%= f.number_field :rating %>
+    </div>
+    <%= f.hidden_field :blog %>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>
+
+
+<% if current_user.try!(:admin?) %>
+    <%= link_to 'Edit', edit_blog_path(@blog) %> |
+<% end %>
+<%= link_to 'Back', blogs_path %>

@@ -1,0 +1,35 @@
+<h1>Listing blogs</h1>
+
+<table id="blog_table">
+  <thead>
+    <tr>
+      <th id="blog_title">Title</th>
+      <th id="blog_date">Date</th>
+      <th id="blog_author">Author</th>
+      <% if current_user.try!(:admin?) %>
+          <th id="blog_options">Options</th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @blogs.each do |blog| %>
+      <tr>
+        <td><%= link_to blog.title, blog %></td>
+        <td><%= blog.published_date %></td>
+        <td><%= blog.author %></td>
+        <% if current_user.try!(:admin?) %>
+            <td class="blog_options"><%= link_to 'Edit', edit_blog_path(blog) %> <%= link_to 'Destroy', blog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<hr/>
+<%= paginate @blogs %>
+
+<br>
+
+<% if current_user.try!(:admin?) %>
+    <%= link_to 'New Blog', new_blog_path %>
+<% end %>

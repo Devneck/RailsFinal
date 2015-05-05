@@ -1,0 +1,30 @@
+<h1>Listing products</h1>
+<% if current_user.try!(:admin?) %>
+    <h5><%= link_to 'Product Admin', products_path %></h5>
+<% end %>
+
+<table id="prod_table">
+  <thead>
+  <tr>
+    <th id="prod_thumb"></th>
+    <th id="prod_name">Name</th>
+    <th id="prod_desc">Description</th>
+    <th id="prod_price">Price</th>
+    <th id="prod_rating">Rating</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @products.each do |product| %>
+      <tr>
+        <td><%= link_to(image_tag(product.thumb), store_show_path(product))  %></td>
+        <td><%= link_to product.proper_name, store_show_path(product) %></td>
+        <td><%= truncate(product.description.html_safe, :length => 20) %></td>
+        <td><%= number_to_currency product.sell_price %></td>
+        <td><%= product.reviews.average(:rating).to_i %> Stars</td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<hr/>
+<%= paginate @products %>

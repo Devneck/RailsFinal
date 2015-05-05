@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @product.proper_name %>
+</p>
+
+<p>
+  <strong>Average Rating:</strong>
+  <% if @product.reviews.average(:rating) == nil %>
+      Not yet rated
+  <% else %>
+      <%= stars(@product.reviews.average(:rating).round) %>
+  <% end %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @product.description.html_safe %>
+</p>
+
+<p>
+  <strong>Stock:</strong>
+  <%= @product.stock %>
+</p>
+
+<p>
+  <strong>Sell price:</strong>
+  <%= number_to_currency @product.sell_price %>
+</p>
+
+<p>
+  <strong>Cost:</strong>
+  <%= number_to_currency @product.cost %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @product.weight %> lbs
+</p>
+
+<p>
+  <%= image_tag @product.image %>
+</p>
+
+<hr/>
+<h3>Reviews:</h3>
+<% @product.reviews.each do |review| %>
+    <hr/>
+    <h5><%= review.author %> said <%= time_ago_in_words(review.created_at) %> ago</h5>
+    <p><%= review.comment %></p>
+    <%= stars(review.rating) %><br/>
+
+    <%= link_to 'Delete Comment', product_review_path(@product, review), :method => :delete, :confirm => "Are you sure?" %>
+
+<% end %>
+<hr/>
+
+<p>
+  <%= link_to 'Edit', edit_product_path(@product)%> |
+  <%= link_to 'Back', products_path %>
+</p>
+
